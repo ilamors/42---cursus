@@ -12,9 +12,12 @@
 
 #include "get_next_line.h"
 
-char *get_next_line(int fd)
+
 
 size_t	read (int fildes, void *buffer, size_t n)
+	int	tmp;
+	int	dest;
+	
 //on cree un tmp pour stocker les donnees du buffer
 //curseur au debut verifie si la string existe ou qu il y a du texte
 //read avance le curseur du nombre de bytes
@@ -30,4 +33,41 @@ size_t	read (int fildes, void *buffer, size_t n)
 // get next line renvoie alors la valeur de ligne a avoir le nombre de bytes extrait lors de ce premier tour
 //get next line sera donc relance autant de fois que necessaire et lira donc notre fichier jusqu a /la fin, ligne par ligne, et nous renverra une ligne a la fois
 
-while
+void search and extract
+
+void join 
+
+char *get_next_line(int fd)
+{
+	char *dest;
+	char temp;
+	File *fp;
+
+	fp = fopen(test.txt, "r")
+
+
+	dest = malloc(sizeof(*char) * buffer_size + 1)
+	if (!dest)
+	return (NULL);
+
+}
+
+int	main(int argc, char **argv)
+{
+	int		fd;
+	char	*line;
+ 
+	if (argc == 1)
+		fd = 0;
+	else if (argc == 2)
+		fd = open(argv[1], O_RDONLY);
+	else
+		return (2);
+	while (get_next_line(fd, &line) == 1)
+	{
+		putendl(line);
+		free(line);
+	}
+	if (argc == 2)
+		close(fd);
+}
