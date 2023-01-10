@@ -17,12 +17,12 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	size_t	i;
 	size_t	slen;
 
-	i = 0;
 	slen = ft_strlen(src);
 	if (!dst || !src)
-		return (0);
+		return (slen);
 	if (size == 0)
 		return (slen);
+	i = 0;
 	while (src[i] != '\0' && i < size - 1)
 	{
 		dst[i] = src[i];
@@ -34,8 +34,9 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 /*
 int	main()
 {
-	char dst[] = "le petit bonhomme";
-	char src[] = "l'hommme";
-	printf("%ld", ft_strlcpy(dst, src, 18));
+	char dst[] = "This is a test";
+	char src[] = "This is a test";
+	printf("%ld", ft_strlcpy(dst, src, 11));
+	printf("%ld", strlcpy(dst, src, 11));
 	return 0;
 }*/

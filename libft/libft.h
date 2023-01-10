@@ -17,7 +17,10 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
-# include<stdint.h>
+# include <strings.h>
+# include <stdint.h>
+# include <ctype.h>
+# include <stddef.h>
 
 typedef struct s_list
 {

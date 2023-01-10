@@ -6,7 +6,7 @@
 #    By: lmorsli <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/16 22:37:13 by lmorsli           #+#    #+#              #
-#    Updated: 2022/12/16 22:38:10 by lmorsli          ###   ########.fr        #
+#    Updated: 2023/01/07 16:24:43 by lmorsli          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,34 +57,25 @@ BONUS		= ft_lstnew.c\
 
 HEADER	= libft.h
 CC	= cc
-FLAGS	= -Wall -Wextra -Werror
+FLAGS	= -Wall -Wextra -Werror -g3
 NAME	= libft.a
 
-#Compile nos .c en .o
 OBJS	= ${SRCS:.c=.o}
 OBJS_BONUS	= ${BONUS:.c=.o}
 %.o: %.c ${SRCS}
 		$(CC) $(FLAGS) -c -o $@ $<
-#Creer une archive 'libft.a' contenant tout nos .o
+
 $(NAME): ${OBJS} ${HEADER}
 		ar rcs ${NAME} ${OBJS}
 
-so:
-	$(CC) -nostartfiles -fPIC $(CFLAGS) $(SRCS) $(BONUS)
-	gcc -nostartfiles -shared -o libft.so $(OBJS) $(OBJS_BONUS)
-
-so:
-$(NAME:.a=.so): $(SRCS_O) $(BONUS_O)
-	$(CC) -shared -o $@ $^
-
 all: $(NAME)
-#Ajoute / Creer 'libft.a' contenant les .o des bonus
+
 bonus: ${OBJS} ${OBJS_BONUS}
 		ar rcs ${NAME} ${OBJS} ${OBJS_BONUS}
-#Fait rm -rf pour tout les fichier .o
+
 clean:
 		rm -f ${OBJS} ${OBJS_BONUS}
-#Utilise la regle clean, puis retire egalement libft.a et a.out
+
 fclean:	clean
 		rm -f ${NAME} a.out
 

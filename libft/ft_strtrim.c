@@ -6,39 +6,51 @@
 /*   By: lmorsli <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 19:49:48 by lmorsli           #+#    #+#             */
-/*   Updated: 2022/12/16 13:17:45 by lmorsli          ###   ########.fr       */
+/*   Updated: 2023/01/07 16:38:04 by lmorsli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+static size_t	ft_chr(char c, char const *set)
+{
+	size_t	i;
+
+	i = 0;
+	while (set[i])
+	{
+		if (set[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	size_t	start;
-	size_t	end;
+	size_t	right;
+	size_t	left;
+	char	*cpy;
 	size_t	i;
-	char	*new;
 
-	if (!s1 || !set)
+	if (s1 == NULL || set == NULL)
 		return (NULL);
-	start = 0;
+	left = 0;
+	while (s1[left] && ft_chr(s1[left], set))
+	left++;
+	right = ft_strlen(s1);
+	while ((right > left) && (ft_chr(s1[right - 1], set)))
+		right--;
+	if (right < left)
+		right = left;
+	cpy = (char *)malloc(sizeof(char) * (right - left + 1));
+	if (cpy == NULL)
+		return (NULL);
 	i = 0;
-	end = ft_strlen (s1) - 1;
-	while (s1[start] && ft_strchr(set, s1[start]) != NULL)
-		start++;
-	while (end > 0 && ft_strchr(set, s1[end]) != NULL)
-		end--;
-	if (end < start)
-		end = start;
-	else
-		end++;
-	new = malloc(sizeof(char) * (end - start + 1));
-	if (!new)
-		return (NULL);
-	while (start < end)
-		new[i++] = s1[start++];
-	new[i] = '\0';
-	return (new);
+	while (left < right)
+		cpy[i++] = s1[left++];
+	cpy[i] = '\0';
+	return (cpy);
 }
 /*
 int	main(void)
