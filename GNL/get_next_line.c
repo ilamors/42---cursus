@@ -99,20 +99,28 @@ void search and extract
 
 void join 
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	char *dest;
-	char temp;
-	File *fp;
+	static char	*str;
+	char		*buf;
+	char		*line;
+	char		*tmp;
 
-	fp = fopen(test.txt, "r")
-
-
-	dest = malloc(sizeof(*char) * buffer_size + 1)
-	if (!dest)
-	return (NULL);
-
+	tmp = NULL;
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	buf = malloc(BUFFER_SIZE + 1);
+	if (!buf)
+		return (NULL);
+	str = ft_read(fd, buf, tmp, str);
+	if (!str)
+		return (NULL);
+	line = ft_before(str);
+	str = ft_after(str);
+	return (line);
 }
+
+
 
 int	main(int argc, char **argv)
 {
