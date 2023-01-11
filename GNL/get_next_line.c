@@ -12,6 +12,68 @@
 
 #include "get_next_line.h"
 
+static char		*line_to_print(char *str)
+{
+	int		i;
+	char	*line_to_print;
+
+	i = 0;
+	while (str && str[i] != '\0' && str[i] != '\n')
+	{
+		if (str[i] == '\n')
+			break ;
+		i++;
+	}
+	line_to_print = ft_strsub(str, 0, i);
+	return (line_to_print);
+}
+
+char			*new_str(char *str, char *new_str)
+{
+	if (str && (ft_strchr(str, '\n')))
+	{
+		new_str = ft_strchr(str, '\n') + 1;
+		new_str = ft_strdup(new_str);
+		free(str);
+		str = new_str;
+	}
+	else if (str && (ft_strchr(str, '\0')))
+	{
+		new_str = ft_strchr(str, '\0');
+		new_str = ft_strdup(new_str);
+		free(str);
+		str = new_str;
+	}
+	return (new_str);
+}
+
+int				get_next_line(const int fd, char **line)
+{
+	static char		*temp[4864];
+	char			buffer[BUFF_SIZE + 1];
+	char			*tempmem;
+	int				readresult;
+
+	if (fd < 0 || line == NULL || fd >= 4864 || read(fd, buffer, 0) < 0)
+		return (-1);
+	while ((readresult = read(fd, buffer, BUFF_SIZE)) > 0)
+	{
+		if (!temp[fd])
+			temp[fd] = ft_strnew(BUFF_SIZE);
+		buffer[readresult] = '\0';
+		tempmem = ft_strjoin(temp[fd], buffer);
+		free(temp[fd]);
+		temp[fd] = tempmem;
+		ft_bzero(buffer, BUFF_SIZE);
+	}
+	if (temp[fd] && *temp[fd] == '\0')
+		return (readresult);
+	*line = line_to_print(temp[fd]);
+	temp[fd] = new_str(temp[fd], tempmem);
+	return (1);
+}
+
+/////////////////////////////////////////////////////
 
 
 size_t	read (int fildes, void *buffer, size_t n)
