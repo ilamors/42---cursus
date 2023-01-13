@@ -58,8 +58,11 @@ int				get_next_line(const int fd, char **line)
 		return (-1);
 	while ((readresult = read(fd, buffer, BUFF_SIZE)) > 0)
 	{
+		buffer = ft_calloc(sizeof(char), BUFF_SIZE + 1);
+		if (!buffer)
+			return (NULL);
 		if (!temp[fd])
-			temp[fd] = ft_strnew(BUFF_SIZE);
+			temp[fd] = ft_substr(buff, 0, BUFF_SIZE);
 		buffer[readresult] = '\0';
 		tempmem = ft_strjoin(temp[fd], buffer);
 		free(temp[fd]);
@@ -122,22 +125,22 @@ char	*get_next_line(int fd)
 
 
 
-int	main(int argc, char **argv)
+#include <stdio.h>
+#include "get_next_line.h"
+
+int	main()
 {
-	int		fd;
-	char	*line;
- 
-	if (argc == 1)
-		fd = 0;
-	else if (argc == 2)
-		fd = open(argv[1], O_RDONLY);
-	else
-		return (2);
-	while (get_next_line(fd, &line) == 1)
+	int    fd;
+	char *line;
+
+	fd = open("./bible.txt", O_RDONLY);
+	while (1)
 	{
-		putendl(line);
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		printf("%s", line);
 		free(line);
 	}
-	if (argc == 2)
-		close(fd);
+	return (0);
 }
