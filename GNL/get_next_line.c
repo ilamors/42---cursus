@@ -12,77 +12,62 @@
 
 #include "get_next_line.h"
 
+#include "get_next_line.h"
+
+static size_t	ft_track_end_line(char *s)
+{
+	size_t	i;
+
+	i = 0;
+	if (!s)
+		return(NULL);
+	while (s[i] != '\0')
+	{
+		if (s[i] == '\n')
+		return (1);
+	}
+	return(0);
+}
+
 static char		*line_to_print(char *str)
 {
 	int		i;
 	char	*line_to_print;
 
 	i = 0;
-	while (str && str[i] != '\0' && str[i] != '\n')
+	while (str[i] != '\0' && str[i] != '\n')
 	{
 		if (str[i] == '\n')
 			break ;
 		i++;
 	}
-	line_to_print = ft_strsub(str, 0, i);
+	line_to_print = ft_strlcpy(str, 0, i);
 	return (line_to_print);
 }
 
-char			*new_str(char *str, char *new_str)
-{
-	if (str && (ft_strchr(str, '\n')))
-	{
-		new_str = ft_strchr(str, '\n') + 1;
-		new_str = ft_strdup(new_str);
-		free(str);
-		str = new_str;
-	}
-	else if (str && (ft_strchr(str, '\0')))
-	{
-		new_str = ft_strchr(str, '\0');
-		new_str = ft_strdup(new_str);
-		free(str);
-		str = new_str;
-	}
-	return (new_str);
-}
+char	ft_store(char *s)
 
-int				get_next_line(const int fd, char **line)
-{
-	static char		*temp[4864];
-	char			buffer[BUFF_SIZE + 1];
-	char			*tempmem;
-	int				readresult;
-
-	if (fd < 0 || line == NULL || fd >= 4864 || read(fd, buffer, 0) < 0)
-		return (-1);
-	while ((readresult = read(fd, buffer, BUFF_SIZE)) > 0)
+while ((read_line = read(fd, buff, BUFFER_SIZE)) > 0)
 	{
-		buffer = ft_calloc(sizeof(char), BUFF_SIZE + 1);
-		if (!buffer)
-			return (NULL);
-		if (!temp[fd])
-			temp[fd] = ft_substr(buff, 0, BUFF_SIZE);
-		buffer[readresult] = '\0';
-		tempmem = ft_strjoin(temp[fd], buffer);
-		free(temp[fd]);
-		temp[fd] = tempmem;
-		ft_bzero(buffer, BUFF_SIZE);
+		if (!reserve) 
+		reserve = ft_strlcpy(reserve, buff, BUFFER_SIZE);
+		else
+		reserve = ft_strjoin(reserve, buff);
 	}
-	if (temp[fd] && *temp[fd] == '\0')
-		return (readresult);
-	*line = line_to_print(temp[fd]);
-	temp[fd] = new_str(temp[fd], tempmem);
-	return (1);
+
+char	*get_next_line(int fd)
+{
+	static char	*reserve;
+	char	line;
+	size_t read_line;
+
+	if (fd < 0 || line == NULL || fd >= 4864 || read(fd, buff, 0) < 0)
+		return(NULL);
+	
 }
 
 /////////////////////////////////////////////////////
 
-
-size_t	read (int fildes, void *buffer, size_t n)
-	int	tmp;
-	int	dest;
-	
 //on cree un tmp pour stocker les donnees du buffer
 //curseur au debut verifie si la string existe ou qu il y a du texte
 //read avance le curseur du nombre de bytes
@@ -97,32 +82,6 @@ size_t	read (int fildes, void *buffer, size_t n)
 // il faut nettoyer la reserve et get next lign renverra une ligne a la fois 
 // get next line renvoie alors la valeur de ligne a avoir le nombre de bytes extrait lors de ce premier tour
 //get next line sera donc relance autant de fois que necessaire et lira donc notre fichier jusqu a /la fin, ligne par ligne, et nous renverra une ligne a la fois
-
-void search and extract
-
-void join 
-
-char	*get_next_line(int fd)
-{
-	static char	*str;
-	char		*buf;
-	char		*line;
-	char		*tmp;
-
-	tmp = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	buf = malloc(BUFFER_SIZE + 1);
-	if (!buf)
-		return (NULL);
-	str = ft_read(fd, buf, tmp, str);
-	if (!str)
-		return (NULL);
-	line = ft_before(str);
-	str = ft_after(str);
-	return (line);
-}
-
 
 
 #include <stdio.h>
