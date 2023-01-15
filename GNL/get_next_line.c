@@ -11,7 +11,113 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+/*
+Cette fonction malloc un char * a la taille de la stash + 2 
+parceaue dans get stash on sarrete avanet le retour a la ligne dans le line_len
+et on ajoute le end of string \0
+elle revoie donc sous forme de ligne la stash
+*/
 
+char	*get_line(char *temp)
+{
+	int		i;
+	char	*line;
+
+	i = 0;
+	if (!temp[i])
+		return (NULL);
+	line = (char *)malloc(sizeof(char) * (ft_strlen(temp) + 2));
+	if (!line)
+		return (NULL);
+	while (temp[i] && temp[i] != '\n')
+	{
+		line[i] = temp[i];
+		i++;
+	}
+	if (temp[i] == '\n')
+	{
+		line[i] = temp[i];
+		i++;
+	}
+	line[i] = '\0';
+	return (line);
+}
+/*
+Cette fonction recupere le fd du fichier ouvert
+et stock le BUFFER SIZE dans idx, si read echoue idx = -1 
+on free et on return NULL
+verifi que le malloc sest bien passer sinon NULL // malloc + 1 endofchar
+On raoute un '\0' à la fin de la chaine lut, 
+pour être sur d'avoir une chaine de caractères valide
+*/
+
+char	*get_temp(int fd, char *temp)
+{
+	char	*buff;
+	int		i;
+
+	buff = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buff)
+		return (NULL);
+	i = 1;
+	while (!ft_strchr(temp, '\n') && i != 0)
+	{
+		i = read(fd, buff, BUFFER_SIZE);
+		if (i == -1)
+		{
+			free(buff);
+			return (NULL);
+		}
+		buff[i] = '\0';
+		temp = ft_strjoin(temp, buff);
+	}
+	free(buff);
+	return (temp);
+}
+/*
+Cette fonction vide la stash de la ligne recup ddans line
+*/
+
+char	*new_stash(char *temp)
+{
+	int		i;
+	int		j; //index new_stash;
+	char	*new_stash;
+
+	i = 0;
+	j = 0;
+	while (temp[i] && temp[i] != '\n')
+		i++;
+	if (!temp[i])
+	{
+		free(temp);
+		return (NULL);
+	}
+	new_stash = (char *)malloc(sizeof(char) * (ft_strlen(temp) - i + 1));
+	if (!new_stash)
+		return (NULL);
+	i++;
+	while (temp[i])
+		new_stash[j++] = temp[i++];
+	new_stash[j] = '\0';
+	free(temp);
+	return (new_stash);
+}
+
+char	*get_next_line(int fd)
+{
+	char		*line;
+	static char	*temp;
+
+	if (fd < 0 || line == NULL || fd >= 1023 || read(fd, buffer, 0) <= 0)
+		return(-1);
+	temp = get_temp(fd, temp);
+	if (!temp)
+		return (NULL);
+	line = get_line(temp);
+	temp = new_stash(temp);
+	return (line);
+}
 #include "get_next_line.h"
 
 static size_t	ft_track_end_line(char *s)
