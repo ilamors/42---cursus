@@ -189,23 +189,28 @@ char	*get_next_line(int fd)
 // get next line renvoie alors la valeur de ligne a avoir le nombre de bytes extrait lors de ce premier tour
 //get next line sera donc relance autant de fois que necessaire et lira donc notre fichier jusqu a /la fin, ligne par ligne, et nous renverra une ligne a la fois
 
-
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <stdio.h>
-#include "get_next_line.h"
 
-int	main()
+int main()
 {
-	int    fd;
+	int fd = open("bible2.txt", O_RDONLY);
+	int a = 1;
 	char *line;
-
-	fd = open("./bible.txt", O_RDONLY);
-	while (1)
+	while (a)
 	{
 		line = get_next_line(fd);
-		if (!line)
-			break ;
-		printf("%s", line);
+		printf("res = %s", line);
+		if(!line)
+			a = 0;
 		free(line);
 	}
-	return (0);
+	// line = get_next_line(fd);
+	// printf("%s", line);
+	//line = get_next_line(fd);
+	//printf("%s", line);
+	//free(line);
+
 }
