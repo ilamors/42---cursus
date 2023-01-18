@@ -12,13 +12,6 @@
 
 #include "get_next_line.h"
 
-/*
-Cette fonction malloc un char * a la taille de la stash + 2 
-parceaue dans get stash on sarrete avanet le retour a la ligne dans le line_len
-et on ajoute le end of string \0
-elle revoie donc sous forme de ligne la stash
-*/
-
 char	*get_line(char *store)
 {
 	int		i;
@@ -33,14 +26,6 @@ char	*get_line(char *store)
 	str_cpy(line, store);
 	return (line);
 }
-/*
-Cette fonction recupere le fd du fichier ouvert
-et stock le BUFFER SIZE dans idx, si read echoue idx = -1 
-on free et on return NULL
-verifi que le malloc sest bien passer sinon NULL // malloc + 1 endofchar
-On raoute un '\0' à la fin de la chaine lut, 
-pour être sur d'avoir une chaine de caractères valide
-*/
 
 char	*read_and_join(int fd, char *store)
 {
@@ -65,9 +50,6 @@ char	*read_and_join(int fd, char *store)
 	free(buff);
 	return (store);
 }
-/*
-Cette fonction vide la stash de la ligne recup ddans line
-*/
 
 char	*new_stash(char *store)
 {
