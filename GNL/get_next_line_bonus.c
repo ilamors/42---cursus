@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmorsli <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/26 14:46:47 by lmorsli           #+#    #+#             */
-/*   Updated: 2023/01/18 14:41:51 by lmorsli          ###   ########.fr       */
+/*   Created: 2023/01/18 16:18:56 by lmorsli           #+#    #+#             */
+/*   Updated: 2023/01/18 16:20:48 by lmorsli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 /*
 Cette fonction malloc un char * a la taille de la stash + 2 
@@ -98,15 +98,15 @@ char	*new_stash(char *store)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*store;
+	static char	*store[1024];
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1023)
 		return (NULL);
-	store = read_and_join(fd, store);
-	if (!store)
+	store[fd] = read_and_join(fd, store);
+	if (!store[fd])
 		return (NULL);
-	line = get_line(store);
-	store = new_stash(store);
+	line = get_line(store[fd]);
+	store[fd] = new_stash(store[fd]);
 	return (line);
 }
 /*
