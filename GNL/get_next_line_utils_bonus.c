@@ -42,7 +42,6 @@ char	*ft_strchr(const char *store, int new_line)
 	return (NULL);
 }
 
-/* si store est vide: malloc et ajoute \0 */
 char	*ft_sjoin(char *store, char *buff)
 {
 	char	*dest;
@@ -90,9 +89,6 @@ void	str_cpy(char *line, char *store)
 	line[i] = '\0';
 }
 
-/*
-calcul la taille de la ligne
-*/
 size_t	ft_line_len(char *line)
 {
 	size_t	len;

@@ -84,7 +84,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1023)
 		return (NULL);
-	store[fd] = read_and_join(fd, store);
+	store[fd] = read_and_join(fd, store[fd]);
 	if (!store[fd])
 		return (NULL);
 	line = get_line(store[fd]);
