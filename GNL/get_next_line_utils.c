@@ -6,7 +6,7 @@
 /*   By: lmorsli <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:14:15 by lmorsli           #+#    #+#             */
-/*   Updated: 2023/01/18 14:21:17 by lmorsli          ###   ########.fr       */
+/*   Updated: 2023/01/23 16:24:01 by lmorsli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ char	*ft_strchr(const char *store, int new_line)
 	return (NULL);
 }
 
-/* si store est vide: malloc et ajoute \0 */
 char	*ft_sjoin(char *store, char *buff)
 {
 	char	*dest;
@@ -54,16 +53,16 @@ char	*ft_sjoin(char *store, char *buff)
 	if (!store)
 	{
 		store = (char *)malloc(sizeof(char) * 1);
+		if (!store)
+			return (NULL);
 		store[0] = '\0';
 	}
-	if (!store || !buff)
+	if (!buff)
 		return (NULL);
-	dest = (char *)malloc(((ft_slen(store)
-					+ ft_slen(buff)) + 1) * sizeof(char));
+	dest = malloc(sizeof(char) *((ft_slen(store) + ft_slen(buff)) + 1));
 	if (!dest)
 		return (NULL);
-	if (store)
-		while (store[++i_store] != '\0')
+	while (store[++i_store] != '\0')
 			dest[i_store] = store[i_store];
 	while (buff[i_buff] != '\0')
 		dest[i_store++] = buff[i_buff++];
@@ -90,9 +89,6 @@ void	str_cpy(char *line, char *store)
 	line[i] = '\0';
 }
 
-/*
-calcul la taille de la ligne
-*/
 size_t	ft_line_len(char *line)
 {
 	size_t	len;

@@ -6,7 +6,7 @@
 /*   By: lmorsli <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 14:46:47 by lmorsli           #+#    #+#             */
-/*   Updated: 2023/01/18 14:41:51 by lmorsli          ###   ########.fr       */
+/*   Updated: 2023/01/23 17:56:30 by lmorsli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*get_line(char *store)
 	i = 0;
 	if (!store[i])
 		return (NULL);
-	line = (char *)malloc(sizeof(char) * (ft_line_len(store) + 2));
+	line = malloc(sizeof(char) * (ft_line_len(store) + 2));
 	if (!line)
 		return (NULL);
 	str_cpy(line, store);
@@ -30,31 +30,31 @@ char	*get_line(char *store)
 char	*read_and_join(int fd, char *store)
 {
 	char	*buff;
-	int		idx;
+	int		readed_idx;
 
-	buff = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buff)
 		return (NULL);
-	idx = 1;
-	while (!ft_strchr(store, '\n') && idx != 0)
+	readed_idx = 1;
+	while (!ft_strchr(store, '\n') && readed_idx != 0)
 	{
-		idx = read(fd, buff, BUFFER_SIZE);
-		if (idx == -1)
+		readed_idx = read(fd, buff, BUFFER_SIZE);
+		if (readed_idx == -1)
 		{
 			free(buff);
 			return (NULL);
 		}
-		buff[idx] = '\0';
+		buff[readed_idx] = '\0';
 		store = ft_sjoin(store, buff);
 	}
 	free(buff);
 	return (store);
 }
 
-char	*new_stash(char *store)
+char	*free_stash(char *store)
 {
 	int		i;
-	int		i_newstash;
+	int		j;
 	char	*new_stash;
 
 	i = 0;
@@ -65,14 +65,14 @@ char	*new_stash(char *store)
 		free(store);
 		return (NULL);
 	}
-	new_stash = (char *)malloc(sizeof(char) * (ft_slen(store) - i + 1));
+	new_stash = malloc(sizeof(char) * (ft_slen(store) - i + 1));
 	if (!new_stash)
 		return (NULL);
 	i++;
-	i_newstash = 0;
+	j = 0;
 	while (store[i])
-		new_stash[i_newstash++] = store[i++];
-	new_stash[i_newstash] = '\0';
+		new_stash[j++] = store[i++];
+	new_stash[j] = '\0';
 	free(store);
 	return (new_stash);
 }
@@ -82,13 +82,18 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*store;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) == -1)
 		return (NULL);
 	store = read_and_join(fd, store);
 	if (!store)
 		return (NULL);
 	line = get_line(store);
-	store = new_stash(store);
+	store = free_stash(store);
+	if (store[0] == '\0')
+	{
+		free(store);
+		store = NULL;
+	}
 	return (line);
 }
 /*
@@ -99,7 +104,7 @@ int main()
 	int    fd;
 	char *line;
 
-	fd = open("testfile", O_RDONLY);
+	fd = open("test.txt", O_RDONLY);
 	line = "";
 	while (line)
 	{
