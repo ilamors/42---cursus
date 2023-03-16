@@ -30,21 +30,21 @@ char	*get_line(char *store)
 char	*read_and_join(int fd, char *store)
 {
 	char	*buff;
-	int		readed_idx;
+	int		reading_idx;
 
-	buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buff)
 		return (NULL);
-	readed_idx = 1;
-	while (!ft_strchr(store, '\n') && readed_idx != 0)
+	reading_idx = 1;
+	while (!ft_strchr(store, '\n') && reading_idx != 0)
 	{
-		readed_idx = read(fd, buff, BUFFER_SIZE);
-		if (readed_idx == -1)
+		reading_idx = read(fd, buff, BUFFER_SIZE);
+		if (reading_idx == -1)
 		{
 			free(buff);
 			return (NULL);
 		}
-		buff[readed_idx] = '\0';
+		buff[reading_idx] = '\0';
 		store = ft_sjoin(store, buff);
 	}
 	free(buff);
@@ -82,21 +82,16 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*store;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) == -1)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	store = read_and_join(fd, store);
 	if (!store)
 		return (NULL);
 	line = get_line(store);
 	store = free_stash(store);
-	if (store[0] == '\0')
-	{
-		free(store);
-		store = NULL;
-	}
 	return (line);
 }
-/*
+
 #include "stdio.h"
 #include "fcntl.h"
 int main()
@@ -104,13 +99,10 @@ int main()
 	int    fd;
 	char *line;
 
-	fd = open("test.txt", O_RDONLY);
-	line = "";
-	while (line)
+	fd = open("bible2.txt", O_RDONLY);
+	while ((line = get_next_line(fd)))
 	{
-		line = get_next_line(fd);
-		printf(" %s", line);
+		printf("res = %s", line);
 		free(line);
 	}
-	return (0);
-}*/
+}

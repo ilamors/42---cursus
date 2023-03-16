@@ -12,30 +12,30 @@
 
 #include "get_next_line_bonus.h"
 
-size_t	ft_slen(const char *s)
+size_t	ft_slen(const char *store)
 {
 	size_t	i;
 
 	i = 0;
-	if (!s)
+	if (!store)
 		return (0);
-	while (s[i] != '\0')
+	while (store[i] != '\0')
 		i++;
 	return (i);
 }
 
-char	*ft_strchr(const char *store, int new_line)
+char	*ft_strchr(const char *store, int c)
 {
 	int	i;
 
 	i = 0;
 	if (!store)
 		return (NULL);
-	if (new_line == '\0')
+	if (c == '\0')
 		return ((char *)&store[ft_slen(store)]);
 	while (store[i] != '\0')
 	{
-		if (store[i] == (char)new_line)
+		if (store[i] == (char)c)
 			return ((char *)&store[i]);
 		i++;
 	}
@@ -45,27 +45,27 @@ char	*ft_strchr(const char *store, int new_line)
 char	*ft_sjoin(char *store, char *buff)
 {
 	char	*dest;
-	size_t	i_store;
-	size_t	i_buff;
+	size_t	i;
+	size_t	j;
 
-	i_store = -1;
-	i_buff = 0;
+	i = -1;
+	j = 0;
 	if (!store)
 	{
-		store = (char *)malloc(sizeof(char) * 1);
+		store = malloc(sizeof(char) * 1);
+		if (!store)
+			return (NULL);
 		store[0] = '\0';
 	}
-	if (!store || !buff)
+	if (!buff)
 		return (NULL);
-	dest = (char *)malloc(((ft_slen(store)
-					+ ft_slen(buff)) + 1) * sizeof(char));
+	dest = malloc(sizeof(char) * ((ft_slen(store) + ft_slen(buff)) + 1));
 	if (!dest)
 		return (NULL);
-	if (store)
-		while (store[++i_store] != '\0')
-			dest[i_store] = store[i_store];
-	while (buff[i_buff] != '\0')
-		dest[i_store++] = buff[i_buff++];
+	while (store[++i] != '\0')
+			dest[i] = store[i];
+	while (buff[j] != '\0')
+		dest[i++] = buff[j++];
 	dest[ft_slen(store) + ft_slen(buff)] = '\0';
 	free(store);
 	return (dest);
@@ -91,10 +91,10 @@ void	str_cpy(char *line, char *store)
 
 size_t	ft_line_len(char *line)
 {
-	size_t	len;
+	size_t	i;
 
-	len = 0;
-	while (line[len] && line[len] != '\n')
-		len++;
-	return (len);
+	i = 0;
+	while (line[i] && line[i] != '\n')
+		i++;
+	return (i);
 }

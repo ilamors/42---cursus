@@ -20,7 +20,7 @@ char	*get_line(char *store)
 	i = 0;
 	if (!store[i])
 		return (NULL);
-	line = (char *)malloc(sizeof(char) * (ft_line_len(store) + 2));
+	line = malloc(sizeof(char) * (ft_line_len(store) + 2));
 	if (!line)
 		return (NULL);
 	str_cpy(line, store);
@@ -30,31 +30,31 @@ char	*get_line(char *store)
 char	*read_and_join(int fd, char *store)
 {
 	char	*buff;
-	int		idx;
+	int		reading_idx;
 
-	buff = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buff)
 		return (NULL);
-	idx = 1;
-	while (!ft_strchr(store, '\n') && idx != 0)
+	reading_idx = 1;
+	while (!ft_strchr(store, '\n') && reading_idx != 0)
 	{
-		idx = read(fd, buff, BUFFER_SIZE);
-		if (idx == -1)
+		reading_idx = read(fd, buff, BUFFER_SIZE);
+		if (reading_idx == -1)
 		{
 			free(buff);
 			return (NULL);
 		}
-		buff[idx] = '\0';
+		buff[reading_idx] = '\0';
 		store = ft_sjoin(store, buff);
 	}
 	free(buff);
 	return (store);
 }
 
-char	*new_stash(char *store)
+char	*free_stash(char *store)
 {
 	int		i;
-	int		i_newstash;
+	int		j;
 	char	*new_stash;
 
 	i = 0;
@@ -65,14 +65,14 @@ char	*new_stash(char *store)
 		free(store);
 		return (NULL);
 	}
-	new_stash = (char *)malloc(sizeof(char) * (ft_slen(store) - i + 1));
+	new_stash = malloc(sizeof(char) * (ft_slen(store) - i + 1));
 	if (!new_stash)
 		return (NULL);
 	i++;
-	i_newstash = 0;
+	j = 0;
 	while (store[i])
-		new_stash[i_newstash++] = store[i++];
-	new_stash[i_newstash] = '\0';
+		new_stash[j++] = store[i++];
+	new_stash[j] = '\0';
 	free(store);
 	return (new_stash);
 }
@@ -88,7 +88,7 @@ char	*get_next_line(int fd)
 	if (!store[fd])
 		return (NULL);
 	line = get_line(store[fd]);
-	store[fd] = new_stash(store[fd]);
+	store[fd] = free_stash(store[fd]);
 	return (line);
 }
 /*
@@ -100,12 +100,9 @@ int main()
 	char *line;
 
 	fd = open("testfile", O_RDONLY);
-	line = "";
-	while (line)
+	while ((line = get_next_line(fd)))
 	{
-		line = get_next_line(fd);
-		printf(" %s", line);
+		printf("res = %s", line);
 		free(line);
 	}
-	return (0);
 }*/
