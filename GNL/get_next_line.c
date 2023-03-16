@@ -91,7 +91,7 @@ char	*get_next_line(int fd)
 	store = free_stash(store);
 	return (line);
 }
-
+/*
 #include "stdio.h"
 #include "fcntl.h"
 int main()
@@ -99,10 +99,10 @@ int main()
 	int    fd;
 	char *line;
 
-	fd = open("bible2.txt", O_RDONLY);
+	fd = open("test.txt", O_RDONLY);
 	while ((line = get_next_line(fd)))
 	{
 		printf("res = %s", line);
 		free(line);
 	}
-}
+}*/
