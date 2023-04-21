@@ -56,4 +56,10 @@ int		main(void)
  	ft_list_remove_if(begin_list, straa, strcmp);
  	print_list(begin_list);
 }
-
+/*
+typedef struct      s_list
+{
+    struct s_list   *next;
+    void            *data;
+}                   t_list;
+*/
