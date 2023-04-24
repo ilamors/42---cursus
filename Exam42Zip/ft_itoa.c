@@ -26,8 +26,8 @@ char	*ft_itoa(int nb)
 	}
 	while(n)
 	{
-		i += 1;
 		n /= 10;
+		i +- 1;
 	}
 	while(nb)
 	{
