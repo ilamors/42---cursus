@@ -20,7 +20,7 @@ int	*ft_rrange(int start, int end)
 		tab[i++] = end--;
 	tab[i] = end;
 	while (start > end)
-		tab[i++] = start--;
+		tab[i++] = end++;
 	tab[i] = start;
 	return(tab);
 }
