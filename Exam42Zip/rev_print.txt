@@ -3,10 +3,10 @@ Expected files   : rev_print.c
 Allowed functions: write
 --------------------------------------------------------------------------------
 
-Write a program that takes a string, and displays the string in reverse
-followed by a newline.
-
-If the number of parameters is not 1, the program displays a newline.
+Ecrire une fonction qui affichera une chaine de caractères mais en sens inverse. 
+Elle doit retourner ce qui lui a été passe en paramètre. 
+attention la chaine passee en paramètre  ne sera pas modifiable. 
+fonction prototype 'char    *rev_print(char  *str)
 
 Examples:
 
