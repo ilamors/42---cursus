@@ -2,10 +2,9 @@
 
 int	main(int ac, char **av)
 {
-	int	i;
-	int	flag;
-
-	i = 0;
+	int	i = 0;
+	int	flag = 0;
+	
 	if (ac > 1)
 	{
 		while (av[1][i] == ' ' || av[1][i] == '\t')
