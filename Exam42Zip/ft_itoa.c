@@ -1,4 +1,22 @@
 #include <stdlib.h>
+int	negative_value(int y)
+{
+	if (y < 0)
+		return(-y);
+	return(y);
+}
+
+int	get_len(int nb)
+{
+	if (nb <= 0)
+		++i;
+	while (nb)
+	{
+		++i;
+		nb /= 10;
+	}
+	return (i);
+}
 
 char	*ft_itoa(int nb)
 {
@@ -6,32 +24,18 @@ char	*ft_itoa(int nb)
 	long	n;
 	char	*str;
 
-	i = 0;
 	n = nb;
-	if (!(str = malloc(sizeof(char) * i + 1)))
+	i = get_len(n);
+	if (!(str = malloc(sizeof(char) * (i + 1))))
 		return(NULL);
 	str[i] = '\0';
-	if (nb == -2147483648)
-		return("-2147483648");
 	if (nb < 0)
-	{
-		i += 1;
-		nb *= -1;
 		str[0] = '-';
-	}
 	if (nb == 0)
-	{
 		str[0] = '0';
-		return(str);
-	}
 	while(n)
 	{
-		n /= 10;
-		i +- 1;
-	}
-	while(nb)
-	{
-		str[--i] = nb % 10 + '0';
+		str[--i] = negative_value(nb % 10) + '0';
 		nb /= 10;
 	}
 	return(str);		
