@@ -1,20 +1,27 @@
 #include <unistd.h>
 
-int	main(int ac, char **av)
+int	get_len(char *str)
 {
-	int	i;
+	int	i = 0;
+	while (str[i])
+		i++;
+	return(i);
+}
 
-	i = 0;
-	if (ac > 1)
+char    *rev_print(char  *str)
+{
+	char	*s = str;
+	int	i = get_len(s) - 1;
+	while ( i >= 0)
 	{
-		while (av[1][i])
-			i++;
-		while (i > 0)
-		{
-			write(1, &av[1][i] - 1, 1);
-				i--;
-		}
+		write (1, &s[i], 1);
+		i--;
 	}
-	write(1, "\n", 1);
-	return(0);
+	return(str);
+}
+
+int	main()
+{
+	char *s = "laila";
+	rev_print(s);
 }
