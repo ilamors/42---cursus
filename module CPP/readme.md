@@ -32,6 +32,7 @@ int main()
 
 Here std is used in front of cin and cout along with scope resolution operator, which indicates that the object cin and cout are defined inside the namespace whose name is std.
 The std is the standard library, and both cin and cout are defined inside this scope.
+
 ###2 - stdiostreams
   
   cin : The object from which your C++ program usually retrieves its data
