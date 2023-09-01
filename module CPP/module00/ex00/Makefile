@@ -17,10 +17,11 @@ all: $(NAME) $(OBJS)
 		$(CC) $(FLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(NAME)
+	@$(RM) $(NAME) $(OBJS)
 
 fclean: clean
+	@$(RM) $(NAME)
 
-re: fclean all
+re: clean all
 
 .PHONY: all clean fclean re

@@ -1,34 +1,16 @@
-#include <iostream>
+#inlude <iostream>
 
-int main(int argc, char **argv)
-{
-    // Check if there are command-line arguments
-    if (argc > 1)
-    {
-        // Iterate over each argument
-        for (int i = 1; i < argc; i++)
-        {
-            // Convert each character of the argument to uppercase
-            for (int j = 0; argv[i][j] != '\0'; j++)
-                argv[i][j] = (char)toupper(argv[i][j]);
-
-            // Print the modified argument
-            std::cout << argv[i];
-
-            // Check if the next argument is not NULL
-            if (argv[i] != NULL)
-                std::cout << " ";
-        }
-
-        // Print a new line after printing all the arguments
-        std::cout << std::endl;
-    }
-    else
-    {
-        // Print a default message when no arguments are provided
-        std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
-    }
-
-    // Return 0 to indicate successful program execution
-    return 0;
+int	main(int ac, char **av) {
+	if (ac == 1)
+		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *";
+	else {
+		for (int i = 1; av[i]; i++) {
+			for (int j = 0; av[i][j]; j++)
+				std::cout << (char) toupper(av[i][j]);
+			if (i < ac - 1)
+				std::cout << ' ';
+		}
+	}
+	std::cout << std::endl;
+	return (EXIT_SUCCESS);
 }
