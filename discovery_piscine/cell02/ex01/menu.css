@@ -1,0 +1,78 @@
+html, body{
+    margin: 0; 
+    background: url("https://bocuse.fr/media/cache/jadro_resize/rc/kV0dtuc91650891918/jadroRoot/medias/5e15abd90a10f/soupe-vge_patrick-rougereau-nocredits.jpg") no-repeat center fixed;
+background-color: rgb(3,4,8);
+width: 100%;
+height: auto;
+}
+.logo{
+    float: right;
+    width: 5%;
+    height: 5%;
+}
+.titre{
+    color: white;
+    text-align: center;
+    margin-top: 15px;
+}
+.sstitre{
+    color: white;
+    text-align: center;
+    margin-top: 6px;
+    font-size: 8px;
+}
+.mainbtn{
+    box-sizing: border-box;
+    color:white;
+    cursor: pointer;
+    display: block;
+    font-family: montserra, Arial, Helvetica, sans-serif;
+    font-size: 11,2px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    line-height: 19,04;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    text-align: center;
+    text-transform: uppercase;
+    background-color: rgb(3,4,8);
+
+}
+.mainbtn:hover {
+    background-color: transparent;
+    }
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    font-family: montserra, Arial, Helvetica, sans-serif;
+    font-size: 11,2px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    line-height: 19,04;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+}
+.dropdown-child {
+    display: none;
+    color: white;
+    min-width: 200px;
+    color:black;
+    padding-left: 10px;
+
+}
+.dropdown-child a {
+    color: white;
+    font-size: small;
+    padding: 5px;
+    text-decoration: none;
+    display: block;
+ 
+}
+.dropdown:hover .dropdown-child {
+    display: block;
+}
