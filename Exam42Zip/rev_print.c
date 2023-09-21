@@ -10,11 +10,10 @@ int	get_len(char *str)
 
 char    *rev_print(char  *str)
 {
-	char	*s = str;
-	int	i = get_len(s) - 1;
+	int	i = get_len(str) - 1;
 	while ( i >= 0)
 	{
-		write (1, &s[i], 1);
+		write (1, &str[i], 1);
 		i--;
 	}
 	return(str);
